@@ -59,7 +59,7 @@ export default function(app){
         const unpaid = scannedPlates.filter((scannedPlate, i) => {
             const removed = removeHighErrorRateCharacters(scannedPlate);
             const found = lookupTable.find((plate) => plate.removed === removed)
-            return !!!found
+            return !found
         })
     
         return res.send(unpaid);
