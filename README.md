@@ -2,7 +2,7 @@
 
 Both frontend and backend were built using node Node.js v14.17.0
 
-to run either the front-end or back-end, open each respetive folder in a terminal tab and run 
+to run either the front-end or back-end, open each respective folder in a terminal tab and run 
 ` npm install `
 to install dependencies and 
 ` npm start `
