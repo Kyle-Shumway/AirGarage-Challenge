@@ -37,40 +37,6 @@ async function getScannedPlates() {
     return request('https://storage.googleapis.com/airgarage/scans.json');
 }
 
-function isPlatePaid(plate, paid) {
-    return paid.includes(plate);
-}
-
-
-
-function getVariations(plate) {
-    const similarVariations = [];
-    const indexes = [];
-    
-
-    for (let index = 0; index < plate.length; index++) {
-        const character = plate[index];
-        const similar = plate.split("");
-        if (characterVariations[character]) {
-          indexes.push(index);
-          similar[index] = characterVariations[character];
-          similarVariations.push(similar.join(""))
-          if (index > 0) {
-            indexes.forEach((idx) => {
-              if (index !== idx) {
-                similar[idx] = characterVariations[similar[idx]]
-                similarVariations.push(similar.join(""))
-                similar[idx] = plate[idx];
-              }
-            })
-          }
-        }
-        
-    }
-
-    return similarVariations;
-}
-
 function removeHighErrorRateCharacters(plate) {
     const plateCharacters = plate.split("")
     return plateCharacters.filter(character => !characterVariations[character]).join();
