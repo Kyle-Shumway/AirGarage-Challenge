@@ -29,8 +29,13 @@ const utilities = {
 
 async function exec() {
     const [first, second, dataFilePath, ...params] = process.argv;
-
+    // load location data from file 
     const location_data = JSON.parse((await getLocationData(dataFilePath)));
+    // build array of functions to execute
+    // [
+    //     { action: [Function: locate], params: [ 'az' ] },
+    //     { action: [Function: find_price_hourly_gt], params: [ '200' ] }
+    // ]
     const commands = params.reduce((soFar, current, index) => {
         if (utilities[current]) {
             soFar.push({
@@ -43,13 +48,15 @@ async function exec() {
         return soFar
     }, [])
 
-    const result = commands.reduce((soFar, command, index) => {
+    // build array of results from commands
+    const results = commands.reduce((soFar, command, index) => {
         const locations = soFar.length ? soFar[index - 1] : location_data;
         soFar.push(command.action(...command.params, locations));
         return soFar
     }, [])
 
-    console.log('Result', result[result.length-1].map(location => location.name))
+    // output last result in array
+    console.log('Result', results[results.length-1].map(location => location.name))
 }
 
 exec();
